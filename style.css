@@ -1,0 +1,657 @@
+/* ============================================================
+   COSMO — Space Exploration Hub
+   CSS Grid + Media Query Responsive Design
+   Pure HTML & CSS · No frameworks · No JavaScript
+   ============================================================ */
+
+/* ── Variables ───────────────────────────────────────────── */
+:root {
+  --bg:          #f5f0e8;       /* warm parchment */
+  --surface:     #ffffff;
+  --surface2:    #f0ebe0;
+  --ink:         #1a1612;
+  --ink-soft:    #5a5248;
+  --accent:      #1a3a6e;       /* deep space blue */
+  --accent-glow: #2a5abf;
+  --star:        #c8962a;       /* golden star */
+  --border:      #ddd6c8;
+  --white:       #ffffff;
+
+  --ff-display: 'Playfair Display', Georgia, serif;
+  --ff-mono:    'DM Mono', 'Courier New', monospace;
+  --ff-body:    'DM Mono', Georgia, serif;
+
+  --gap:     1.5rem;
+  --radius:  6px;
+  --max-w:   1240px;
+}
+
+/* ── Reset ───────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--ff-body);
+  font-size: 0.92rem;
+  line-height: 1.75;
+}
+
+a { color: var(--accent-glow); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* ── Page Wrapper: MAIN CSS GRID ────────────────────────── */
+/*
+   Desktop layout (>= 900px):
+   [ header  header  header  ]
+   [ hero    hero    hero    ]   ← spans all 3 cols
+   [ stats   stats   stats   ]   ← spans all 3 cols
+   [ article article sidebar ]   ← 2 col article + 1 col aside
+   [ planets planets planets ]   ← spans all 3 cols
+   [ quote   quote   quote   ]   ← spans all 3 cols
+   [ footer  footer  footer  ]   ← spans all 3 cols
+*/
+.page-wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr 360px;
+  grid-template-areas:
+    "header   header   header"
+    "hero     hero     hero"
+    "stats    stats    stats"
+    "article  article  sidebar"
+    "planets  planets  planets"
+    "quote    quote    quote"
+    "footer   footer   footer";
+  gap: var(--gap);
+  padding: var(--gap);
+  max-width: var(--max-w);
+  margin: 0 auto;
+}
+
+/* ── HEADER ─────────────────────────────────────────────── */
+.site-header {
+  grid-area: header;
+  grid-column-start: 1;
+  grid-column-end: 4;        /* spans all 3 columns */
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+
+  background: var(--accent);
+  color: var(--white);
+  border-radius: var(--radius);
+  padding: 1rem 1.75rem;
+  position: sticky;
+  top: var(--gap);
+  z-index: 99;
+}
+
+.header-logo {
+  font-family: var(--ff-display);
+  font-size: 1.2rem;
+  letter-spacing: 0.12em;
+  color: var(--white);
+}
+
+.header-nav {
+  display: flex;
+  gap: 2rem;
+  flex: 1;
+  justify-content: center;
+}
+
+.header-nav a {
+  color: rgba(255,255,255,0.7);
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  transition: color 0.2s;
+}
+
+.header-nav a:hover { color: var(--white); text-decoration: none; }
+
+.header-date {
+  font-size: 0.7rem;
+  color: rgba(255,255,255,0.45);
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+}
+
+/* ── HERO ────────────────────────────────────────────────── */
+.hero-banner {
+  grid-area: hero;
+  grid-column-start: 1;
+  grid-column-end: 4;        /* spans all 3 columns */
+
+  background: var(--accent);
+  border-radius: var(--radius);
+  padding: 5rem 4rem;
+  position: relative;
+  overflow: hidden;
+  color: var(--white);
+}
+
+/* Starfield dots */
+.hero-banner::before {
+  content: '✦ · ✧ ·  ✦   · ✧   ✦ ·  · ✧ ·  ✦   ✧ ·  ✦  ·  ✧  ·  ✦  ✧ ·';
+  position: absolute;
+  top: 1.5rem;
+  right: 2rem;
+  font-size: 0.7rem;
+  color: rgba(255,255,255,0.18);
+  letter-spacing: 0.4em;
+  line-height: 2.2;
+  word-spacing: 1.2em;
+  white-space: pre-wrap;
+  width: 40%;
+  pointer-events: none;
+}
+
+.hero-orb {
+  position: absolute;
+  right: -80px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 380px;
+  height: 380px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 38% 38%,
+    rgba(100,150,255,0.25),
+    rgba(20,40,120,0.5),
+    rgba(5,10,40,0.9)
+  );
+  border: 1px solid rgba(255,255,255,0.06);
+  pointer-events: none;
+}
+
+.hero-eyebrow {
+  font-size: 0.7rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+  margin-bottom: 1rem;
+  font-family: var(--ff-mono);
+}
+
+.hero-heading {
+  font-family: var(--ff-display);
+  font-size: clamp(3.5rem, 7vw, 7rem);
+  line-height: 0.9;
+  margin-bottom: 1.5rem;
+  color: var(--white);
+  position: relative;
+}
+
+.hero-heading em {
+  color: var(--star);
+  font-style: italic;
+}
+
+.hero-body {
+  font-size: 1rem;
+  color: rgba(255,255,255,0.65);
+  max-width: 480px;
+  line-height: 1.8;
+  margin-bottom: 2rem;
+  position: relative;
+}
+
+.cta-btn {
+  display: inline-block;
+  padding: 0.65em 1.8em;
+  background: var(--star);
+  color: var(--ink);
+  font-family: var(--ff-mono);
+  font-size: 0.82rem;
+  font-weight: bold;
+  letter-spacing: 0.06em;
+  border-radius: var(--radius);
+  transition: transform 0.2s, background 0.2s;
+  position: relative;
+}
+
+.cta-btn:hover { transform: translateY(-2px); text-decoration: none; background: #e8b030; }
+
+/* ── STATS ROW ───────────────────────────────────────────── */
+.stats-row {
+  grid-area: stats;
+  grid-column-start: 1;
+  grid-column-end: 4;        /* spans all 3 columns */
+
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.stat-item {
+  background: var(--surface);
+  padding: 1.5rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.stat-big {
+  font-family: var(--ff-display);
+  font-size: 1.8rem;
+  color: var(--accent);
+  line-height: 1;
+}
+
+.stat-desc {
+  font-size: 0.75rem;
+  color: var(--ink-soft);
+  font-family: var(--ff-mono);
+  line-height: 1.4;
+}
+
+/* ── FEATURE ARTICLE ─────────────────────────────────────── */
+.feature-article {
+  grid-area: article;
+  grid-column-start: 1;
+  grid-column-end: 3;        /* spans 2 of 3 columns */
+
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 2.5rem;
+}
+
+.article-label {
+  display: inline-block;
+  font-size: 0.65rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--white);
+  background: var(--accent);
+  padding: 0.2em 0.7em;
+  border-radius: 2px;
+  margin-bottom: 1rem;
+  font-family: var(--ff-mono);
+}
+
+.feature-article h2 {
+  font-family: var(--ff-display);
+  font-size: 1.65rem;
+  color: var(--ink);
+  margin-bottom: 1.2rem;
+  line-height: 1.25;
+  border-bottom: 2px solid var(--accent);
+  padding-bottom: 0.75rem;
+}
+
+.feature-article p {
+  color: var(--ink-soft);
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+}
+
+.read-link {
+  display: inline-block;
+  margin-top: 0.75rem;
+  font-family: var(--ff-mono);
+  font-size: 0.8rem;
+  color: var(--accent);
+  border-bottom: 1px solid var(--accent);
+  padding-bottom: 1px;
+  transition: color 0.2s;
+}
+
+.read-link:hover { color: var(--accent-glow); text-decoration: none; }
+
+/* ── SIDEBAR ─────────────────────────────────────────────── */
+.mission-sidebar {
+  grid-area: sidebar;
+  grid-column-start: 3;
+  grid-column-end: 4;        /* column 3 only */
+
+  background: var(--accent);
+  border-radius: var(--radius);
+  padding: 1.75rem 1.5rem;
+  color: var(--white);
+}
+
+.sidebar-heading {
+  font-family: var(--ff-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+  margin-bottom: 1.2rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid rgba(255,255,255,0.12);
+}
+
+.mission-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+.mission-item:last-child { border-bottom: none; }
+
+.mission-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.mission-text {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 0.1rem;
+}
+
+.mission-name {
+  font-size: 0.85rem;
+  color: var(--white);
+  font-weight: bold;
+}
+
+.mission-meta {
+  font-size: 0.68rem;
+  color: rgba(255,255,255,0.45);
+  font-family: var(--ff-mono);
+}
+
+.mission-status {
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.4);
+  font-family: var(--ff-mono);
+  white-space: nowrap;
+}
+
+.mission-status.live {
+  color: #7aff9a;
+}
+
+/* ── PLANETS SECTION ─────────────────────────────────────── */
+.planets-section {
+  grid-area: planets;
+  grid-column-start: 1;
+  grid-column-end: 4;        /* spans all 3 columns */
+
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 2.5rem;
+}
+
+.section-heading {
+  font-family: var(--ff-display);
+  font-size: 1.3rem;
+  color: var(--ink);
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--border);
+}
+
+/* Inner grid: 4 equal + 1 wide spanning card */
+.planets-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+}
+
+/* The 5th card spans 2 columns — creative multi-column span */
+.feature-planet {
+  grid-column-start: 3;
+  grid-column-end: 5;        /* spans 2 of the 4 inner columns */
+}
+
+.planet-card {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.4rem 1.2rem;
+  transition: border-color 0.2s, transform 0.2s;
+  border-top: 3px solid var(--planet-color, var(--accent));
+}
+
+.planet-card:hover { transform: translateY(-3px); border-color: var(--planet-color, var(--accent)); }
+
+.planet-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  color: rgba(255,255,255,0.8);
+  margin-bottom: 0.75rem;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+}
+
+.planet-card h3 {
+  font-family: var(--ff-display);
+  font-size: 1.05rem;
+  color: var(--ink);
+  margin-bottom: 0.4rem;
+}
+
+.planet-card p {
+  font-size: 0.78rem;
+  color: var(--ink-soft);
+  line-height: 1.55;
+  margin-bottom: 0.75rem;
+}
+
+.planet-tag {
+  display: inline-block;
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border: 1px solid var(--planet-color, var(--accent));
+  color: var(--planet-color, var(--accent));
+  padding: 0.15em 0.55em;
+  border-radius: 2px;
+  font-family: var(--ff-mono);
+}
+
+/* ── PULL QUOTE ──────────────────────────────────────────── */
+.pull-quote {
+  grid-area: quote;
+  grid-column-start: 1;
+  grid-column-end: 4;        /* spans all 3 columns */
+
+  text-align: center;
+  padding: 3rem 2rem;
+  border-top: 2px solid var(--accent);
+  border-bottom: 2px solid var(--accent);
+}
+
+.pull-quote p {
+  font-family: var(--ff-display);
+  font-style: italic;
+  font-size: clamp(1.1rem, 2.5vw, 1.6rem);
+  color: var(--ink);
+  line-height: 1.55;
+  max-width: 750px;
+  margin: 0 auto 1rem;
+}
+
+.pull-quote cite {
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  font-family: var(--ff-mono);
+}
+
+/* ── FOOTER ──────────────────────────────────────────────── */
+.site-footer {
+  grid-area: footer;
+  grid-column-start: 1;
+  grid-column-end: 4;        /* spans all 3 columns */
+
+  background: var(--accent);
+  border-radius: var(--radius);
+  padding: 1.25rem 1.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.footer-left {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.footer-logo {
+  font-family: var(--ff-display);
+  font-size: 1rem;
+  color: var(--white);
+  letter-spacing: 0.08em;
+}
+
+.footer-tagline {
+  font-size: 0.68rem;
+  color: rgba(255,255,255,0.4);
+  font-family: var(--ff-mono);
+}
+
+.footer-right {
+  font-size: 0.7rem;
+  color: rgba(255,255,255,0.35);
+  font-family: var(--ff-mono);
+  text-align: right;
+}
+
+/* ============================================================
+   MEDIA QUERIES — RESPONSIVE DESIGN
+   ============================================================ */
+
+/* ── Tablet: 600px – 900px ─────────────────────────────── */
+@media (max-width: 900px) {
+  .page-wrapper {
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+      "header   header"
+      "hero     hero"
+      "stats    stats"
+      "article  article"
+      "sidebar  sidebar"
+      "planets  planets"
+      "quote    quote"
+      "footer   footer";
+    gap: 1rem;
+    padding: 1rem;
+  }
+
+  /* Reset all column spans to fill the 2-column grid */
+  .site-header,
+  .hero-banner,
+  .stats-row,
+  .feature-article,
+  .mission-sidebar,
+  .planets-section,
+  .pull-quote,
+  .site-footer {
+    grid-column-start: 1;
+    grid-column-end: 3;
+  }
+
+  .stats-row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .planets-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .feature-planet {
+    grid-column-start: 1;
+    grid-column-end: 3;
+  }
+
+  .hero-banner {
+    padding: 3.5rem 2.5rem;
+  }
+
+  .hero-orb {
+    width: 260px;
+    height: 260px;
+    right: -60px;
+  }
+
+  .header-date { display: none; }
+}
+
+/* ── Mobile: below 600px ───────────────────────────────── */
+@media (max-width: 600px) {
+  .page-wrapper {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "header"
+      "hero"
+      "stats"
+      "article"
+      "sidebar"
+      "planets"
+      "quote"
+      "footer";
+    gap: 0.85rem;
+    padding: 0.85rem;
+  }
+
+  /* All sections fill the single column */
+  .site-header,
+  .hero-banner,
+  .stats-row,
+  .feature-article,
+  .mission-sidebar,
+  .planets-section,
+  .pull-quote,
+  .site-footer {
+    grid-column-start: 1;
+    grid-column-end: 2;
+  }
+
+  .stats-row {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .planets-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .feature-planet {
+    grid-column-start: 1;
+    grid-column-end: 2;
+  }
+
+  .hero-banner {
+    padding: 2.5rem 1.5rem 3rem;
+  }
+
+  .hero-orb { display: none; }
+  .hero-banner::before { display: none; }
+
+  .header-nav {
+    display: none;  /* collapses nav on very small screens */
+  }
+
+  .site-footer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .footer-right { text-align: left; }
+}
